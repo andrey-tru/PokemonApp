@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  List<TodoItem> _tasks = [];
+  List<TodoItem> pokemon = [];
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _HomePage extends State<HomePage> {
 
   void refresh() async {
     List<Map<String, dynamic>> _results = await DB.query(TodoItem.table);
-    _tasks = _results.map((item) => TodoItem.fromMap(item)).toList();
+    pokemon = _results.map((item) => TodoItem.fromMap(item)).toList();
   }
 
   @override
@@ -42,13 +42,13 @@ class _HomePage extends State<HomePage> {
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
         if (state is PokemonLoadSuccess) {
-          if (_tasks.isEmpty) {
+          if (pokemon.isEmpty) {
             for (int i = 0; i < state.pokemonList.length; i++) {
               _save(state.pokemonList[i].name);
             }
           }
         }
-        if (_tasks.isNotEmpty) {
+        if (pokemon.isNotEmpty) {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -83,7 +83,7 @@ class _HomePage extends State<HomePage> {
                     onTap: () {
                       showSearch(
                         context: context,
-                        delegate: PokemonSearch(_tasks),
+                        delegate: PokemonSearch(pokemon),
                       );
                     },
                   ),
@@ -94,7 +94,7 @@ class _HomePage extends State<HomePage> {
                     onTap: () async {
                       var rand = Random();
                       BlocProvider.of<PokemonBloc>(context).add(PokemonInfo(
-                          name: _tasks[rand.nextInt(_tasks.last.id)].name));
+                          name: pokemon[rand.nextInt(pokemon.last.id)].name));
                       await Navigator.pushNamed(context, '/pokemonDetail');
                     },
                   ),

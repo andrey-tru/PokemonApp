@@ -26,7 +26,6 @@ class PokemonApi {
     if (response.statusCode == 200) {
       return Pokemon.fromJson(json.decode(response.body));
     } else {
-      print("object");
       throw Exception('${response.reasonPhrase}');
     }
   }
