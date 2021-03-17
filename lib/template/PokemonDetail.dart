@@ -15,7 +15,7 @@ class PokemonDetail extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                '${state.pokemon.name}',
+                '${state.pokemonDetail.name}',
                 style: TextStyle(
                   fontFeatures: [FontFeature.enable('smcp')],
                 ),
@@ -38,7 +38,7 @@ class PokemonDetail extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '${state.pokemon.name}',
+                      '${state.pokemonDetail.name}',
                       style: TextStyle(
                         fontSize: 13,
                         fontFeatures: [
@@ -55,7 +55,7 @@ class PokemonDetail extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '${state.pokemon.effect}',
+                      '${state.pokemonDetail.effect}',
                       style: TextStyle(fontSize: 13),
                     ),
                     Divider(),
@@ -67,7 +67,7 @@ class PokemonDetail extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '${state.pokemon.shortEffect}',
+                      '${state.pokemonDetail.shortEffect}',
                       style: TextStyle(fontSize: 13),
                     ),
                     Divider(),
@@ -79,7 +79,7 @@ class PokemonDetail extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '${state.pokemon.generation}',
+                      '${state.pokemonDetail.generation}',
                       style: TextStyle(fontSize: 13),
                     ),
                   ],

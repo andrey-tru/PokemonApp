@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/api/Pokemon.dart';
 import 'package:pokemon_app/bloc/PokemonBloc.dart';
 import 'package:pokemon_app/event/PokemonEvent.dart';
-import 'package:pokemon_app/models/TodoItem.dart';
 
 class PokemonSearch extends SearchDelegate<Pokemon> {
-  final List<TodoItem> pokemonlist;
+  final List<dynamic> pokemonlist;
 
   PokemonSearch(this.pokemonlist);
 

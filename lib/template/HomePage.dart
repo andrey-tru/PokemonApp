@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/bloc/PokemonBloc.dart';
 import 'package:pokemon_app/event/PokemonEvent.dart';
-import 'package:pokemon_app/models/TodoItem.dart';
-import 'package:pokemon_app/services/db.dart';
 import 'package:pokemon_app/state/PokemonState.dart';
 import 'package:pokemon_app/template/PokemonSearch.dart';
 
@@ -18,37 +16,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  List<TodoItem> pokemon = [];
-
-  @override
-  void initState() {
-    refresh();
-    super.initState();
-  }
-
-  void _save(a) async {
-    TodoItem item = TodoItem(name: a);
-    await DB.insert(TodoItem.table, item);
-    refresh();
-  }
-
-  void refresh() async {
-    List<Map<String, dynamic>> _results = await DB.query(TodoItem.table);
-    pokemon = _results.map((item) => TodoItem.fromMap(item)).toList();
-  }
+  List<dynamic> pokemonListName = [];
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PokemonBloc, PokemonState>(
       builder: (context, state) {
         if (state is PokemonLoadSuccess) {
-          if (pokemon.isEmpty) {
-            for (int i = 0; i < state.pokemonList.length; i++) {
-              _save(state.pokemonList[i].name);
-            }
-          }
+          pokemonListName = state.pokemon;
         }
-        if (pokemon.isNotEmpty) {
+        if (pokemonListName.isNotEmpty) {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -83,7 +60,7 @@ class _HomePage extends State<HomePage> {
                     onTap: () {
                       showSearch(
                         context: context,
-                        delegate: PokemonSearch(pokemon),
+                        delegate: PokemonSearch(pokemonListName),
                       );
                     },
                   ),
@@ -94,7 +71,9 @@ class _HomePage extends State<HomePage> {
                     onTap: () async {
                       var rand = Random();
                       BlocProvider.of<PokemonBloc>(context).add(PokemonInfo(
-                          name: pokemon[rand.nextInt(pokemon.last.id)].name));
+                          name: pokemonListName[
+                                  rand.nextInt(pokemonListName.length)]
+                              .name));
                       await Navigator.pushNamed(context, '/pokemonDetail');
                     },
                   ),
